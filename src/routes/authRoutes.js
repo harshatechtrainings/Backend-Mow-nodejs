@@ -11,10 +11,6 @@ logger.info("Accesing the endpoint1");
 router.post("/signup", authController.signup);
 router.post("/signin", authController.signin);
 
-router.delete("/user/:user", authController.deleteUser);
-router.get('/users/:username', authController.findUserByUsername);
-router.get("/users", authController.fetchUsers);
-
 router.get("/profile", authMiddleware.verifyToken, (req, res) => {
   // This route is protected and can only be accessed by authenticated users
   // res.json({ message: 'Profile accessed successfully', userId: req.userId });
