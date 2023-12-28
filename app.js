@@ -3,8 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const db = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
+const db = require('./src/config/db');
+const authRoutes = require('./src/routes/authRoutes');
 
 const app = express();
 
@@ -17,6 +17,9 @@ app.use('/auth', authRoutes);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, async() => {
   console.log(`Server is running on port ${PORT}`);
+  await db.connectToDatabase();
 });
+
+module.exports = app;

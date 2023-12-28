@@ -1,11 +1,39 @@
 {
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "caller-callsite": "^5.0.0",
+    "callsites": "^4.1.0",
+    "config": "^3.3.9",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.3"
+    "mongoose": "^8.0.3",
+    "stack-trace": "^1.0.0-pre2",
+    "supertest": "^6.3.3",
+    "winston": "^3.11.0",
+    "winston-daily-rotate-file": "^4.7.1"
+  },
+  "name": "backend-mow-nodejs",
+  "description": "",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha tests/integration/*-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshatechtrainings/Backend-Mow-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harshatechtrainings/Backend-Mow-nodejs/issues"
+  },
+  "homepage": "https://github.com/harshatechtrainings/Backend-Mow-nodejs#readme",
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
   }
 }
