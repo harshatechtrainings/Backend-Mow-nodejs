@@ -1,3 +1,5 @@
+/** @format */
+
 // controllers/authController.js
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
@@ -21,14 +23,13 @@ exports.deleteUser = async (req, res) => {
     if (response) {
       await User.deleteOne({ username: user });
       logger.info(`Deleting the user ${user} is success`);
-      res.status(200).json({ message: StatusEnum.SUCCESS});
+      res.status(200).json({ message: StatusEnum.SUCCESS });
     }
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: StatusEnum.INTERNAL_SERVER_ERROR });
   }
-  
-}
+};
 
 exports.fetchUsers = async (req, res) => {
   try {
@@ -37,9 +38,9 @@ exports.fetchUsers = async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 exports.findUserByUsername = async (req, res) => {
   try {
@@ -47,26 +48,12 @@ exports.findUserByUsername = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
     res.status(200).json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
-};
-
-
-exports.simpleUserauthentication = async (username, password) => {
-  const user = await User.findOne({ username });
-
-  if (user) {
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (isValidPassword) {
-      return true;
-    }
-  }
-
-  return false;
 };

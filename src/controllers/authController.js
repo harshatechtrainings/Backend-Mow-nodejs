@@ -1,4 +1,4 @@
-// controllers/authController.js
+/** @format */
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -7,7 +7,9 @@ const config = require("config");
 const { logger, setLabel } = require("../Logger/logger");
 
 setLabel("authController");
-exports.signup = async (req, res) => {
+
+
+const signup = async (req, res) => {
   const { fullname, username, password, confirmPassword } = req.body;
 
   try {
@@ -17,6 +19,7 @@ exports.signup = async (req, res) => {
         fullname,
         username,
         password: hashedPassword,
+        created: Date.now(),
       });
 
       await newUser.save();
@@ -30,33 +33,28 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.signin = async (req, res) => {
+const signin = async (req, res) => {
   const { username, password } = req.body;
   logger.info("Authentiating the user with given information");
   try {
-    const response = await this.findUserWithPassword(username, password);
+    const response = await findUserWithPassword(username, password);
 
-    await validateResponse(response, res, false);
+    await validateResponse(response, res);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: StatusEnum.INTERNAL_SERVER_ERROR });
   }
 };
 
-
-/** Funtion findUserWithPassword returns only boolean value
- * @param username
- * @param password
- */
-exports.findUserWithPassword = async (username, password) => {
+const findUserWithPassword = async (username, password) => {
   const user = await User.findOne({ username });
 
   if (user.isLocked()) {
     return user;
   }
-  
-  if (user.loginAttempts === config.get('security.maxLoginAttempts')) {
-     user.resetLoginAttempts();
+
+  if (user.loginAttempts === config.get("security.maxLoginAttempts")) {
+    user.resetLoginAttempts();
   }
 
   if (user) {
@@ -81,36 +79,25 @@ const setCookies = (res, token) => {
 };
 
 const handleFailedLogin = async (user) => {
-  console.log("handleLogin");
   // Increment login attempts
   const result = await user.incrementLoginAttempts();
   console.log(result);
   // Check if login attempts exceed the limit
   if (user.isMaxLoginAttemptsExceeded()) {
     return await user.lockAccount();
-    // return result.json({ error: 'Account locked. Please try again later.' });
   } else {
     return result;
-    // return result.json({ error: 'Invalid credentials. Please try again.' });
   }
 };
 
-const validateResponse = (result, res, isAPIRequest) => {
+const validateResponse = (result, res) => {
   if (result instanceof User) {
     if (result.loginAttempts === 0) {
-      if (isAPIRequest) {
-        const token = jwt.sign({ userId: result._id }, process.env.JWT_SECRET, {
-          expiresIn: config.get("security.tokenexperiation"), // You can customize the expiration time
-        });
-
-        setCookies(res, token);
-        res.status(200).json({ message: StatusEnum.SUCCESS, token });
-      }
-      /** isAuthenticated is not required here since user was valideted with pasword in above step */
-      res.json({
-        message: StatusEnum.SUCCESS,
-        username: result.username,
+      const token = jwt.sign({ userId: result._id }, process.env.JWT_SECRET, {
+        expiresIn: config.get("security.tokenexperiation"), // You can customize the expiration time
       });
+      setCookies(res, token);
+      res.status(200).json({ message: StatusEnum.SUCCESS, token });
     } else if (
       result.loginAttempts === config.get("security.maxLoginAttempts") ||
       result.loginAttempts > config.get("security.maxLoginAttempts")
@@ -129,3 +116,18 @@ const validateResponse = (result, res, isAPIRequest) => {
     return res.status(401).json({ error: StatusEnum.INVALID_CREDENTIALS });
   }
 };
+
+const simpleUserauthentication = async (username, password) => {
+  const user = await User.findOne({ username });
+
+  if (user) {
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (isValidPassword) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+module.exports = { signin, signup, simpleUserauthentication, findUserWithPassword };

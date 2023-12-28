@@ -6,9 +6,12 @@ const userSchema = new mongoose.Schema({
   fullname: { type: String, required: true },
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+  created:{type: Number,required:true },
+  lastupdated:{type: Number,defualt:0 },
   loginAttempts: { type: Number, default: 0 },
   lockUntil: { type: Number, default: 0 },
   activated: { type: Boolean, required: false, default: false },
+  usertype:{type:String,default:""}
 });
 
 // models/User.js

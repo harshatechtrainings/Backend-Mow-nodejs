@@ -9,42 +9,60 @@ const isAuthenticated = false;
 /** Middleware to verify JWT token */
 exports.verifyToken = async (req, res, next) => {
   const token = req.headers.authorization;
+  
+  if (token == null || token == undefined || token == "") {
+    return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
+  }
+  
   const authorizationArray = token.split(" ");
 
   if (authorizationArray.length == 2 && authorizationArray[0] == "Bearer") {
-    await verifyBearerToken(authorizationArray[1]);
+    const result = await verifyBearerToken(authorizationArray[1],req);
+
+    if (result == StatusEnum.UNAUTHORIZED) {
+      return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
+    } else if (result == StatusEnum.SUCCESS) {
+      await this.isAuthenticated(req, res, next);
+    }
     /** isAuthenticated function here is required to validate incase if access token is malformed. */
-    await this.isAuthenticated(req, res, next);
   } else if (authorizationArray[0] == "Basic") {
     const userCredentials = atob(authorizationArray[1]).split(":");
     const username = userCredentials[0];
     const password = userCredentials[1];
-    const response = await authController.findUserWithPassword(
-      username,
-      password
-    );
-    authController.validateResponse(response, res, true);
+    const response = await authController.simpleUserauthentication(username, password)
+    if (response) {
+      next();
+    }
+    else {
+      res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
+    }
   }
 };
 
-const verifyBearerToken = (token) => {
+const verifyBearerToken = async (token,req) => {
   if (!token) {
-    return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
+    return StatusEnum.UNAUTHORIZED;
   }
-  verifyJSWT(token);
+
+  await jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return StatusEnum.UNAUTHORIZED;
+    }
+    req.userId = decoded.userId;
+  });
+
+  return StatusEnum.SUCCESS;
 };
 
 /** Middleware to check if a user is authenticated */
 exports.isAuthenticated = async (req, res, next) => {
   try {
+     console.log(req.userId);
     const user = await User.findById(req.userId);
-
+    console.log(user);
     if (!user) {
       return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
     }
-
-    // You can add additional checks based on your authentication requirements
-
     next();
   } catch (error) {
     console.error(error);
@@ -52,13 +70,8 @@ exports.isAuthenticated = async (req, res, next) => {
   }
 };
 
-const verifyJSWT = (token) => {
-  jwt.verify(token.split(" ")[1], process.env.JWT_SECRET, (err, decoded) => {
-    console.log(decoded);
-    if (err) {
-      return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
-    }
-    req.userId = decoded.userId;
-    next();
-  });
-};
+
+//Give me a documentaion for below function along with params
+
+
+
