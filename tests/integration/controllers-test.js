@@ -5,7 +5,7 @@ const { expect } = require("chai");
 const request = require("supertest"); // Install supertest for HTTP request testing
 const app = require("../../app"); // Replace with the actual app setup
 // const User = require('../../src/models/User');
-const { StatusEnum } = require("../../src/utils/errorCodes");
+const { Status } = require("../../src/utils/errorCodes");
 const db = require("../../src/config/db");
 
 describe("Integration Tests", () => {
@@ -19,7 +19,7 @@ describe("Integration Tests", () => {
   it("should test an Signup endpoint", async () => {
     const response = await request(app).post("/auth/signup").send(testUser);
     expect(response.statusCode).to.equal(201);
-    expect(response.body).to.deep.equal({ message: StatusEnum.SUCCESS });
+    expect(response.body).to.deep.equal({ message: StatusMessage.SUCCESS });
   });
 
   it("should test an Signin endpoint", async () => {
@@ -28,7 +28,7 @@ describe("Integration Tests", () => {
       .send({ username: testUser.username, password: testUser.password });
     expect(response.statusCode).to.equal(200);
     expect(response.body).to.deep.equal({
-      message: StatusEnum.SUCCESS,
+      message: StatusMessage.SUCCESS,
       username: testUser.username,
     });
   });
@@ -39,6 +39,6 @@ describe("Integration Tests", () => {
       .send({ username: testUser.username, password: testUser.password });
     // console.log(response);
     expect(response.statusCode).to.equal(200);
-    expect(response.body).to.deep.equal({ message: StatusEnum.SUCCESS });
+    expect(response.body).to.deep.equal({ message: StatusMessage.SUCCESS });
   });
 });

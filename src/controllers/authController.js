@@ -2,7 +2,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { StatusEnum } = require("../utils/errorCodes");
+const { StatusMessage } = require("../utils/statusMessage");
 const config = require("config");
 const { logger, setLabel } = require("../Logger/logger");
 const { sendEmail } = require("../utils/emailService");
@@ -16,7 +16,7 @@ const signup = async (req, res) => {
   try {
     const user = await User.findOne({ username });
     if (user) {
-      return res.status(400).json({ message: StatusEnum.USER_ALREADY_EXISTS });
+      return res.status(400).json({ message: StatusMessage.USER_ALREADY_EXISTS });
     }
 
     if (password === confirmPassword) {
@@ -30,12 +30,12 @@ const signup = async (req, res) => {
 
       await newUser.save();
       emailService(username);
-      res.status(201).json({ message: StatusEnum.SUCCESS });
+      res.status(201).json({ message: StatusMessage.SUCCESS });
     } else {
-      res.status(401).json({ message: StatusEnum.INVALID_CREDENTIALS });
+      res.status(401).json({ message: StatusMessage.INVALID_CREDENTIALS });
     }
   } catch (error) {
-    res.status(500).json({ error: StatusEnum.INTERNAL_SERVER_ERROR });
+    res.status(500).json({ error: StatusMessage.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -48,7 +48,7 @@ const signin = async (req, res) => {
     await validateResponse(response, res);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: StatusEnum.INTERNAL_SERVER_ERROR });
+    res.status(500).json({ error: StatusMessage.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -103,23 +103,23 @@ const validateResponse = (result, res) => {
         expiresIn: config.get("security.tokenexperiation"), // You can customize the expiration time
       });
       setCookies(res, token);
-      res.status(200).json({ message: StatusEnum.SUCCESS, token });
+      res.status(200).json({ message: StatusMessage.SUCCESS, token });
     } else if (
       result.loginAttempts === config.get("security.maxLoginAttempts") ||
       result.loginAttempts > config.get("security.maxLoginAttempts")
     ) {
       res.status(401).json({
-        message: StatusEnum.ACCOUNT_LOCKED,
+        message: StatusMessage.ACCOUNT_LOCKED,
         attempts: result.loginAttempts,
       });
     } else if (result.loginAttempts > 0) {
       res.status(401).json({
-        message: StatusEnum.INVALID_CREDENTIALS,
+        message: StatusMessage.INVALID_CREDENTIALS,
         attempts: result.loginAttempts,
       });
     }
   } else {
-    return res.status(401).json({ error: StatusEnum.INVALID_CREDENTIALS });
+    return res.status(401).json({ error: StatusMessage.INVALID_CREDENTIALS });
   }
 };
 

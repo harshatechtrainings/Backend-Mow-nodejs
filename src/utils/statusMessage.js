@@ -1,7 +1,7 @@
 /** @format */
 
 // enums.js
-const StatusEnum = {
+const StatusMessage = {
   SUCCESS: "SUCCESS",
   PENDING: "PENDING",
   APPROVED: "APPROVED",
@@ -16,4 +16,4 @@ const StatusEnum = {
   USER_NOT_FOUND: "USER_NOT_FOUND",
 };
 
-module.exports = { StatusEnum };
+module.exports = { StatusMessage };

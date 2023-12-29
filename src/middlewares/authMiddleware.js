@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const authController = require("../controllers/authController");
 const config = require("config");
-const { StatusEnum } = require("../utils/errorCodes");
+const { StatusMessage } = require("../utils/statusMessage");
 
 const isAuthenticated = false;
 
@@ -13,7 +13,7 @@ exports.verifyToken = async (req, res, next) => {
   const token = req.headers.authorization;
 
   if (token == null || token == undefined || token == "") {
-    return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
+    return res.status(401).json({ error: StatusMessage.UNAUTHORIZED });
   }
 
   const authorizationArray = token.split(" ");
@@ -21,9 +21,9 @@ exports.verifyToken = async (req, res, next) => {
   if (authorizationArray.length == 2 && authorizationArray[0] == "Bearer") {
     const result = await verifyBearerToken(authorizationArray[1], req);
 
-    if (result == StatusEnum.UNAUTHORIZED) {
-      return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
-    } else if (result == StatusEnum.SUCCESS) {
+    if (result == StatusMessage.UNAUTHORIZED) {
+      return res.status(401).json({ error: StatusMessage.UNAUTHORIZED });
+    } else if (result == StatusMessage.SUCCESS) {
       await this.isAuthenticated(req, res, next);
     }
     /** isAuthenticated function here is required to validate incase if access token is malformed. */
@@ -35,24 +35,24 @@ exports.verifyToken = async (req, res, next) => {
     if (response) {
       next();
     } else {
-      res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
+      res.status(401).json({ error: StatusMessage.UNAUTHORIZED });
     }
   }
 };
 
 const verifyBearerToken = async (token, req) => {
   if (!token) {
-    return StatusEnum.UNAUTHORIZED;
+    return StatusMessage.UNAUTHORIZED;
   }
 
   await jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return StatusEnum.UNAUTHORIZED;
+      return StatusMessage.UNAUTHORIZED;
     }
     req.userId = decoded.userId;
   });
 
-  return StatusEnum.SUCCESS;
+  return StatusMessage.SUCCESS;
 };
 
 /** Middleware to check if a user is authenticated */
@@ -62,12 +62,12 @@ exports.isAuthenticated = async (req, res, next) => {
     const user = await User.findById(req.userId);
     console.log(user);
     if (!user) {
-      return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
+      return res.status(401).json({ error: StatusMessage.UNAUTHORIZED });
     }
     next();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: StatusEnum.INTERNAL_SERVER_ERROR });
+    res.status(500).json({ error: StatusMessage.INTERNAL_SERVER_ERROR });
   }
 };
 
