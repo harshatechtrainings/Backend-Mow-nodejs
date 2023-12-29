@@ -90,18 +90,38 @@ const updateDetails = (req, res) => {
 
 const getAllBookings = async (req, res, next) => {
   try {
+    const page = parseInt(req.query.page) || 2;
+    const pageSize = parseInt(req.query.pageSize) || 2;
+
+    const totalCount = await BookingDetails.countDocuments();
+    const totalPages = Math.ceil(totalCount / pageSize);
+    const skip = (page - 1) * pageSize;
+
+    // const sortBy = req.query.sortBy || "_id"; // Default to sorting by _id
+    // const sortOrder = req.query.sortOrder === "desc" ? -1 : 1;
+
+    // .sort({ [sortBy]: sortOrder }) // Sort based on the provided field and order. Add this to query
+    const bookings = await BookingDetails.find().skip(skip).limit(pageSize);
     /** implement authenticate before fetching the users */
-    const bookings = await BookingDetails.findone(1);
-    return res
-      .status(StatusCodes.OK)
-      .json({ status: ReasonPhrases.OK, message: StatusMessage.SUCCESS, data: { bookings } });
+    //api localhost:3000/api/data?page=1&pageSize=10 for above implementation
+    // const bookings = await BookingDetails.find();
+    return res.status(StatusCodes.OK).json({
+      status: ReasonPhrases.OK,
+      message: StatusMessage.SUCCESS,
+      data: { bookings },
+      page,
+      pageSize,
+      totalPages,
+      totalCount,
+    });
   } catch (error) {
+    console.log(error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       status: ReasonPhrases.INTERNAL_SERVER_ERROR,
       message: StatusMessage.INTERNAL_SERVER_ERROR,
-      error,
+      data: { error },
     });
-    res.status(500).json({ error: StatusMessage.INTERNAL_SERVER_ERROR });
+    // res.status(500).json({ error: StatusMessage.INTERNAL_SERVER_ERROR });
   }
 };
 
