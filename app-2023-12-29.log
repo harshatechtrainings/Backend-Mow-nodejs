@@ -149,3 +149,6 @@
 2023-12-29T15:05:55.776Z [authRoutes] info: Accesing the endpoint1
 2023-12-29T15:05:55.787Z [userRoutes] info: Accesing the endpoint
 2023-12-29T15:05:55.788Z [bookRoutes] info: Accesing the endpoint
+2023-12-29T15:06:25.258Z [authRoutes] info: Accesing the endpoint1
+2023-12-29T15:06:25.268Z [userRoutes] info: Accesing the endpoint
+2023-12-29T15:06:25.269Z [bookRoutes] info: Accesing the endpoint

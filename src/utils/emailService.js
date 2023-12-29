@@ -6,7 +6,7 @@ const nodemailer = require("nodemailer");
 // Visit https://ethereal.email/create to get your test credentials
 const testAccount = {
   user: "mowtestemail@gmail.com",
-  pass: "xlbqnsdpkitbhjeu",
+  pass: process.env.EMAIL_APPPASS,
   smtp: {
     host: "smtp.gmail.com",
     port: 587,
