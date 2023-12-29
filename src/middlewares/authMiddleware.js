@@ -1,3 +1,5 @@
+/** @format */
+
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const authController = require("../controllers/authController");
@@ -9,15 +11,15 @@ const isAuthenticated = false;
 /** Middleware to verify JWT token */
 exports.verifyToken = async (req, res, next) => {
   const token = req.headers.authorization;
-  
+
   if (token == null || token == undefined || token == "") {
     return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
   }
-  
+
   const authorizationArray = token.split(" ");
 
   if (authorizationArray.length == 2 && authorizationArray[0] == "Bearer") {
-    const result = await verifyBearerToken(authorizationArray[1],req);
+    const result = await verifyBearerToken(authorizationArray[1], req);
 
     if (result == StatusEnum.UNAUTHORIZED) {
       return res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
@@ -29,17 +31,16 @@ exports.verifyToken = async (req, res, next) => {
     const userCredentials = atob(authorizationArray[1]).split(":");
     const username = userCredentials[0];
     const password = userCredentials[1];
-    const response = await authController.simpleUserauthentication(username, password)
+    const response = await authController.simpleUserauthentication(username, password);
     if (response) {
       next();
-    }
-    else {
+    } else {
       res.status(401).json({ error: StatusEnum.UNAUTHORIZED });
     }
   }
 };
 
-const verifyBearerToken = async (token,req) => {
+const verifyBearerToken = async (token, req) => {
   if (!token) {
     return StatusEnum.UNAUTHORIZED;
   }
@@ -57,7 +58,7 @@ const verifyBearerToken = async (token,req) => {
 /** Middleware to check if a user is authenticated */
 exports.isAuthenticated = async (req, res, next) => {
   try {
-     console.log(req.userId);
+    console.log(req.userId);
     const user = await User.findById(req.userId);
     console.log(user);
     if (!user) {
@@ -70,8 +71,4 @@ exports.isAuthenticated = async (req, res, next) => {
   }
 };
 
-
 //Give me a documentaion for below function along with params
-
-
-

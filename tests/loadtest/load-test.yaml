@@ -1,0 +1,13 @@
+# artillery run load-test-config.yml
+
+config:
+  target: 'http://localhost:3000'  # Replace with your API endpoint
+  phases:
+    - duration: 60  # Duration of the test in seconds
+      arrivalRate: 5  # Number of new virtual users to start per second
+scenarios:
+  - flow:
+      - get:
+          url: '/users/'  # Replace with your API endpoint
+          headers:
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NThkMGRiMjYyZjAwZmExMTlhNTNmMjgiLCJpYXQiOjE3MDM4MjIwOTAsImV4cCI6MTcwMzgyNTY5MH0.FdUwibQGojltBut4b4cV3faxaO0esBnH0jG7zIPs1Eg'

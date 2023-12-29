@@ -1,5 +1,7 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+/** @format */
+
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 async function connectToDatabase() {
   try {
@@ -8,9 +10,9 @@ async function connectToDatabase() {
       useUnifiedTopology: true,
     });
 
-    console.log('Connected to the database');
+    console.log("Connected to the database");
   } catch (error) {
-    console.error('MongoDB connection error:', error.message);
+    console.error("MongoDB connection error:", error.message);
     // You might want to handle the error in a way that makes sense for your application
     // For example, throw an error or exit the process
     throw error;

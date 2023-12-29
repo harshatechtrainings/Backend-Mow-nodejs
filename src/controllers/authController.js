@@ -5,14 +5,20 @@ const jwt = require("jsonwebtoken");
 const { StatusEnum } = require("../utils/errorCodes");
 const config = require("config");
 const { logger, setLabel } = require("../Logger/logger");
+const { sendEmail } = require("../utils/emailService");
+const { emailService, verifyToken } = require("./emailController");
 
 setLabel("authController");
-
 
 const signup = async (req, res) => {
   const { fullname, username, password, confirmPassword } = req.body;
 
   try {
+    const user = await User.findOne({ username });
+    if (user) {
+      return res.status(400).json({ message: StatusEnum.USER_ALREADY_EXISTS });
+    }
+
     if (password === confirmPassword) {
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = new User({
@@ -23,7 +29,7 @@ const signup = async (req, res) => {
       });
 
       await newUser.save();
-
+      emailService(username);
       res.status(201).json({ message: StatusEnum.SUCCESS });
     } else {
       res.status(401).json({ message: StatusEnum.INVALID_CREDENTIALS });
@@ -130,4 +136,15 @@ const simpleUserauthentication = async (username, password) => {
   return false;
 };
 
-module.exports = { signin, signup, simpleUserauthentication, findUserWithPassword };
+const verify = async (req, res) => {
+  const { token } = req.query;
+  try {
+    const decoded = await verifyToken(token);
+    // If verification is successful, you can perform additional actions here
+    res.json({ message: "Verification successful", user: decoded });
+  } catch (error) {
+    res.status(401).json({ error: "Invalid or expired token" });
+  }
+};
+
+module.exports = { signin, signup, simpleUserauthentication, findUserWithPassword, verify };

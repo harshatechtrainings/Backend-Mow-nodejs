@@ -1,0 +1,5 @@
+2023-12-29T03:54:44.612Z [authRoutes] info: Accesing the endpoint1
+2023-12-29T03:54:44.615Z [userRoutes] info: Accesing the endpoint
+2023-12-29T03:54:50.139Z [userRoutes] info: Authentiating the user with given information
+2023-12-29T03:57:43.519Z [authRoutes] info: Accesing the endpoint1
+2023-12-29T03:57:43.522Z [userRoutes] info: Accesing the endpoint

@@ -1,3 +1,5 @@
+/** @format */
+
 // enums.js
 const StatusEnum = {
   SUCCESS: "SUCCESS",
@@ -10,6 +12,8 @@ const StatusEnum = {
   INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
   UNKNOWN_ERROR: "UNKNOWN_ERROR",
   UNAUTHORIZED: "UNAUTHORIZED",
+  USER_ALREADY_EXISTS: "USER_ALREADY_EXISTS",
+  USER_NOT_FOUND: "USER_NOT_FOUND",
 };
 
 module.exports = { StatusEnum };

@@ -15,7 +15,7 @@ router.post("/signin", authController.signin);
 
 router.get("/profile", authMiddleware.verifyToken, (req, res) => {
   // This route is protected and can only be accessed by authenticated users
-  // res.json({ message: 'Profile accessed successfully', userId: req.userId });
+  res.json({ message: "Profile accessed successfully", userId: req.userId });
 });
 
 module.exports = router;
