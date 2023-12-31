@@ -47,7 +47,6 @@ const signin = async (req, res) => {
 
     await validateResponse(response, res);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: StatusMessage.INTERNAL_SERVER_ERROR });
   }
 };
@@ -87,7 +86,6 @@ const setCookies = (res, token) => {
 const handleFailedLogin = async (user) => {
   // Increment login attempts
   const result = await user.incrementLoginAttempts();
-  console.log(result);
   // Check if login attempts exceed the limit
   if (user.isMaxLoginAttemptsExceeded()) {
     return await user.lockAccount();

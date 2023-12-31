@@ -5,6 +5,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { StatusMessage } = require("../utils/statusMessage");
+const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const config = require("config");
 const { logger, setLabel } = require("../Logger/logger");
 
@@ -43,6 +44,7 @@ exports.fetchUsers = async (req, res) => {
 exports.findUserByUsername = async (req, res) => {
   try {
     const { username } = req.params;
+    console.log(username);
     const user = await User.findOne({ username });
 
     if (!user) {
@@ -57,10 +59,16 @@ exports.findUserByUsername = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const { username } = req.params;
-  req.body.lastupdated = new Date();
 
   try {
-    if (req.body instanceof User) {
+    req.body.lastupdated = new Date();
+    // Get the schema paths from the Mongoose model
+    const modelPaths = Object.keys(User.schema.paths);
+
+    // Check if all keys in the request body are present in the model schema
+    const isValidFields = Object.keys(req.body).every((key) => modelPaths.includes(key));
+
+    if (isValidFields) {
       const updatedUser = await User.findOneAndUpdate(
         { username: username },
         {
@@ -73,7 +81,11 @@ exports.updateUser = async (req, res) => {
         return res.status(404).json({ error: StatusMessage.USER_NOT_FOUND });
       }
 
-      res.json(updatedUser);
+      return res
+        .status(StatusCodes.OK)
+        .json({ status: ReasonPhrases.OK, message: StatusMessage.SUCCESS, data: { updatedUser } });
+    } else {
+      return res.status(404).json({ error: "Invalid body" });
     }
   } catch (error) {
     console.error(error);

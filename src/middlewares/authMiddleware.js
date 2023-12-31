@@ -58,9 +58,7 @@ const verifyBearerToken = async (token, req) => {
 /** Middleware to check if a user is authenticated */
 exports.isAuthenticated = async (req, res, next) => {
   try {
-    console.log(req.userId);
     const user = await User.findById(req.userId);
-    console.log(user);
     if (!user) {
       return res.status(401).json({ error: StatusMessage.UNAUTHORIZED });
     }

@@ -10,9 +10,11 @@ const userSchema = new mongoose.Schema({
   area: { type: String, required: true },
   vehicleType: { type: String, required: true },
   acers: { type: Number, required: true },
-  dateBooked: { type: Date, required: true },
-  startTime: { type: String, required: false },
-  status: { type: String, required: false },
+  dateBooked: { type: Date, required: true },// on which date they want service
+  bookingTime: { type: String, required: false }, // booking created date
+  startTime: { type: Number, required: true },
+  endTime: { type: Number, required: true },
+  estimatedAmount: { type: String, required: true },
 });
 
 // Sub-schema for Driver Information
@@ -39,6 +41,7 @@ const bookingSchema = new mongoose.Schema({
 // Main Booking Details Schema
 const bookingDetailsSchema = new mongoose.Schema(
   {
+    bookingId: { type: String, required: true, unique: true },
     user: userSchema, // Embed user sub-schema
     driver: driverSchema, // Embed driver sub-schema
     booking: bookingSchema, // Embed booking sub-schema
