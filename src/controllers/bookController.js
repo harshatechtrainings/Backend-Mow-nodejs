@@ -6,6 +6,24 @@ const mongoose = require("mongoose");
 const randomatic = require("randomatic");
 
 const bookVehicle = (req, res) => {
+  /* 	#swagger.tags = ['Book']
+        #swagger.description = 'Endpoint to Create booking' */
+
+  /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/bookVehicle"
+                    }  
+                }
+            }
+        } 
+    */
+  /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+
   const {
     name,
     email,
@@ -18,18 +36,7 @@ const bookVehicle = (req, res) => {
     endTime,
     estimatedAmount,
   } = req.body.user;
-  console.log(
-    name,
-    email,
-    mobileNumber,
-    area,
-    vehicleType,
-    acers,
-    dateBooked,
-    startTime,
-    endTime,
-    estimatedAmount
-  );
+
   const bookingDateTime = Date.now();
 
   /** Check if user exists first. And ftech all user information */
@@ -246,33 +253,29 @@ const bookVehicle = (req, res) => {
       res.status(201).json({ message: StatusMessage.SUCCESS });
     })
     .catch((error) => {
+      console.log(error);
       res.status(500).json({ message: StatusMessage.INTERNAL_SERVER_ERROR });
     });
 };
 
 const updateDetails = (req, res) => {
+  /* 	#swagger.tags = ['Book']
+        #swagger.description = 'Endpoint to Update booking' */
+
   // Example: Update user's name
-  const bookingIdToUpdate = "658e5e2cfabaa4fcdde58f15"; // Replace with the actual booking ID
-  //   const userIdToUpdate = "658e62d8b5eb3823ce37b70f"; // Replace with the actual user ID
+  const bookingIdToUpdate = req.params.bookingId; // Replace with the actual booking ID
 
   // Update query
   const updateQuery = {
-    _id: bookingIdToUpdate,
+    bookingId: bookingIdToUpdate,
     // "user._id": userIdToUpdate, // Use the correct path to the user sub-document
   };
 
+  const { driver } = req.body;
   // Updated data
   const updatedUserData = {
     $set: {
-      driver: {
-        vehicleNo: "ABC123",
-        name: "Driver Name",
-        email: "driver@example.com",
-        number: "9876543210",
-        startTime: "9:30 AM",
-        endTime: "6:00 PM",
-        status: "Accepted",
-      },
+      driver,
     },
   };
 
@@ -291,6 +294,8 @@ const updateDetails = (req, res) => {
 };
 
 const getAllBookings = async (req, res, next) => {
+  /* 	#swagger.tags = ['Book']
+        #swagger.description = 'Fetch all booking' */
   try {
     const page = parseInt(req.query.page) || 2;
     const pageSize = parseInt(req.query.pageSize) || 2;

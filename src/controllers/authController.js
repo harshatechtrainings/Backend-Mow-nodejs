@@ -11,6 +11,9 @@ const { emailService, verifyToken } = require("./emailController");
 setLabel("authController");
 
 const signup = async (req, res) => {
+  /* 	#swagger.tags = ['Auth']
+        #swagger.description = 'Endpoint to signup a specific user' */
+
   const { fullname, username, password, confirmPassword } = req.body;
 
   try {
@@ -40,6 +43,8 @@ const signup = async (req, res) => {
 };
 
 const signin = async (req, res) => {
+  /* 	#swagger.tags = ['Auth']
+        #swagger.description = 'Endpoint to signin a specific user' */
   const { username, password } = req.body;
   logger.info("Authentiating the user with given information");
   try {
@@ -135,6 +140,7 @@ const simpleUserauthentication = async (username, password) => {
 };
 
 const verify = async (req, res) => {
+  /*  #swagger.auto = false */
   const { token } = req.query;
   try {
     const decoded = await verifyToken(token);

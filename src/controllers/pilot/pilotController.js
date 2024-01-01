@@ -8,6 +8,8 @@ const randomatic = require("randomatic");
 const bcrypt = require("bcrypt");
 
 const registerPilot = async (req, res) => {
+  /* 	#swagger.tags = ['Pilot']
+        #swagger.description = 'Endpoint to create register by pilot' */
   try {
     const pilotRegistration = new PilotRegistration(req.body);
     const savedPilotRegistration = await pilotRegistration.save();
@@ -18,6 +20,8 @@ const registerPilot = async (req, res) => {
 };
 
 const updatePilotRegistrationByAdmin = async (req, res) => {
+  /* 	#swagger.tags = ['Pilot']
+        #swagger.description = 'Endpoint to update pilot registration by admin' */
   try {
     const { id } = req.params;
     const { admin } = req.body;

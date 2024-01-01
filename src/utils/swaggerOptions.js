@@ -17,7 +17,7 @@ const options = {
       },
     ],
   },
-  apis: [path.join(__dirname, "../routes/*.js")], // Update with the path to your API routes
+  apis: [path.join(__dirname, "../routes/*.js"), path.join(__dirname, "../routes/pilot/*.js")], // Update with the path to your API routes
 };
 
 const specs = swaggerJsdoc(options);

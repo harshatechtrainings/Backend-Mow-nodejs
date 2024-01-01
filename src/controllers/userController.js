@@ -12,6 +12,8 @@ const { logger, setLabel } = require("../Logger/logger");
 setLabel("userController");
 
 exports.deleteUser = async (req, res) => {
+  /* 	#swagger.tags = ['Users']
+        #swagger.description = 'Endpoint to delete User' */
   console.log(req);
   const { user } = req.params;
   const { username, password } = req.body;
@@ -32,6 +34,8 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.fetchUsers = async (req, res) => {
+  /* 	#swagger.tags = ['Users']
+        #swagger.description = 'Endpoint to fetch all Users' */
   try {
     /** implement authenticate before fetching the users */
     const users = await User.find();
@@ -42,6 +46,8 @@ exports.fetchUsers = async (req, res) => {
 };
 
 exports.findUserByUsername = async (req, res) => {
+  /* 	#swagger.tags = ['Users']
+        #swagger.description = 'Endpoint to fetch Users by username' */
   try {
     const { username } = req.params;
     console.log(username);
@@ -58,6 +64,8 @@ exports.findUserByUsername = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
+  /* 	#swagger.tags = ['Users']
+        #swagger.description = 'Endpoint to update User by username' */
   const { username } = req.params;
 
   try {
