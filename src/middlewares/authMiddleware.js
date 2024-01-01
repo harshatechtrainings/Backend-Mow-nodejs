@@ -10,7 +10,6 @@ const isAuthenticated = false;
 
 /** Middleware to verify JWT token */
 exports.verifyToken = async (req, res, next) => {
-  /*  #swagger.auto = false */
   const token = req.headers.authorization;
   console.log(token);
   console.log(req.headers);

@@ -140,7 +140,7 @@ const simpleUserauthentication = async (username, password) => {
 };
 
 const verify = async (req, res) => {
-  /*  #swagger.auto = false */
+  /* #swagger.ignore = true */
   const { token } = req.query;
   try {
     const decoded = await verifyToken(token);

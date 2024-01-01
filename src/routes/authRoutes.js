@@ -14,7 +14,7 @@ router.post("/signup", authController.signup);
 router.post("/signin", authController.signin);
 
 router.get("/profile", authMiddleware.verifyToken, (req, res) => {
-  /*  #swagger.auto = false */
+  /* #swagger.ignore = true */
   // This route is protected and can only be accessed by authenticated users
   res.json({ message: "Profile accessed successfully", userId: req.userId });
 });
