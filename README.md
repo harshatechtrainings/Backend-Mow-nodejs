@@ -31,6 +31,15 @@
     Clone the repository:
     git clone https://github.com/your-username/your-repo.git
 
+# .env
+
+    Create the below peoperties with values
+
+    PORT=
+    MONGODB_URI=
+    JWT_SECRET=
+    EMAIL_APPPASS=
+
 # Navigate to the project directory:
 
     cd your-repo
