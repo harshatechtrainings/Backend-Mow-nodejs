@@ -10,12 +10,12 @@ const bookRoutes = require("./src/routes/bookRoutes");
 const pilotRoutes = require("./src/routes/pilot/pilotRoutes");
 const app = express();
 
-
+configureMiddleware(app);
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/book", bookRoutes);
 app.use("/pilot", pilotRoutes);
-configureMiddleware(app);
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, async () => {

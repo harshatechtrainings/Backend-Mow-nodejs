@@ -45,6 +45,7 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
   /* 	#swagger.tags = ['Auth']
         #swagger.description = 'Endpoint to signin a specific user' */
+  console.log(req.body);
   const { username, password } = req.body;
   logger.info("Authentiating the user with given information");
   try {

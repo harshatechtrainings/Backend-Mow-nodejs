@@ -227,32 +227,9 @@
           "Book"
         ],
         "description": "Fetch all booking",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -261,24 +238,9 @@
           "Book"
         ],
         "description": "Endpoint to Create booking",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         },
         "security": [
@@ -304,43 +266,9 @@
           "Book"
         ],
         "description": "Endpoint to Update booking",
-        "parameters": [
-          {
-            "name": "bookingId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "driver": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
+          "default": {
+            "description": ""
           }
         }
       }

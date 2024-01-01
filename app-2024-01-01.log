@@ -165,3 +165,25 @@
 2024-01-01T09:49:59.368Z [userRoutes] info: Accesing the endpoint
 2024-01-01T09:49:59.369Z [bookRoutes] info: Accesing the endpoint
 2024-01-01T09:49:59.378Z [pilotRoutes] info: Accesing the endpoint
+2024-01-01T09:53:08.025Z [authRoutes] info: Accesing the endpoint1
+2024-01-01T09:53:08.041Z [userRoutes] info: Accesing the endpoint
+2024-01-01T09:53:08.042Z [bookRoutes] info: Accesing the endpoint
+2024-01-01T09:53:08.051Z [pilotRoutes] info: Accesing the endpoint
+2024-01-01T09:58:03.470Z [authRoutes] info: Accesing the endpoint1
+2024-01-01T09:58:03.491Z [userRoutes] info: Accesing the endpoint
+2024-01-01T09:58:03.492Z [bookRoutes] info: Accesing the endpoint
+2024-01-01T09:58:03.504Z [pilotRoutes] info: Accesing the endpoint
+2024-01-01T10:03:12.549Z [authRoutes] info: Accesing the endpoint1
+2024-01-01T10:03:12.572Z [userRoutes] info: Accesing the endpoint
+2024-01-01T10:03:12.574Z [bookRoutes] info: Accesing the endpoint
+2024-01-01T10:03:12.585Z [pilotRoutes] info: Accesing the endpoint
+2024-01-01T10:05:03.347Z [authRoutes] info: Accesing the endpoint1
+2024-01-01T10:05:03.363Z [userRoutes] info: Accesing the endpoint
+2024-01-01T10:05:03.364Z [bookRoutes] info: Accesing the endpoint
+2024-01-01T10:05:03.371Z [pilotRoutes] info: Accesing the endpoint
+2024-01-01T10:05:12.267Z [pilotRoutes] info: Authentiating the user with given information
+2024-01-01T10:06:04.759Z [authRoutes] info: Accesing the endpoint1
+2024-01-01T10:06:04.778Z [userRoutes] info: Accesing the endpoint
+2024-01-01T10:06:04.780Z [bookRoutes] info: Accesing the endpoint
+2024-01-01T10:06:04.789Z [pilotRoutes] info: Accesing the endpoint
+2024-01-01T10:06:07.914Z [pilotRoutes] info: Authentiating the user with given information
