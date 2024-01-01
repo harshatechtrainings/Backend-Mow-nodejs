@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   area: { type: String, required: true },
   vehicleType: { type: String, required: true },
   acers: { type: Number, required: true },
-  dateBooked: { type: Date, required: true },// on which date they want service
+  dateBooked: { type: Date, required: true }, // on which date they want service
   bookingTime: { type: String, required: false }, // booking created date
   startTime: { type: Number, required: true },
   endTime: { type: Number, required: true },
@@ -22,7 +22,7 @@ const driverSchema = new mongoose.Schema({
   vehicleNo: { type: String, required: false },
   name: { type: String, required: false },
   email: { type: String, required: false },
-  number: { type: String, required: false },
+  number: { type: String, required: false }, //MobileNumber
   startTime: { type: String, required: false },
   endTime: { type: String, required: false },
   status: { type: String, required: false },

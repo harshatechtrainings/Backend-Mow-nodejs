@@ -9,4 +9,14 @@
 # 01-01-2024
 
     - Implemented the swagger auto gen
-    - Yet to implment the schemas and parameters for all the pednding enpoints
+    - Implemented all the schemas for end points
+
+# Impemented Methods
+
+    - Signup
+    - Email Verification
+    - Signin
+    - Bookings
+    - Bookings Update
+    - Pilot registration
+    - Admin approval for pilot registration

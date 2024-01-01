@@ -262,6 +262,21 @@ const updateDetails = (req, res) => {
   /* 	#swagger.tags = ['Book']
         #swagger.description = 'Endpoint to Update booking' */
 
+  /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/bookingUpdate"
+                    }  
+                }
+            }
+        } 
+    */
+  /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+
   // Example: Update user's name
   const bookingIdToUpdate = req.params.bookingId; // Replace with the actual booking ID
 
@@ -293,12 +308,27 @@ const updateDetails = (req, res) => {
     });
 };
 
-const getAllBookings = async (req, res, next) => {
+const getAllBookings = async (req, res) => {
   /* 	#swagger.tags = ['Book']
         #swagger.description = 'Fetch all booking' */
+
+  /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+
+  /*  #swagger.parameters['page'] = {
+            in: 'query',
+            description: 'Some description...',
+            type: 'number'
+    } */
+  /*  #swagger.parameters['pageSize'] = {
+            in: 'query',
+            description: 'Some description...',
+            type: 'number'
+    } */
   try {
     const page = parseInt(req.query.page) || 2;
-    const pageSize = parseInt(req.query.pageSize) || 2;
+    const pageSize = parseInt(req.query.pageSize) || 10;
 
     const totalCount = await BookingDetails.countDocuments();
     const totalPages = Math.ceil(totalCount / pageSize);

@@ -119,6 +119,11 @@
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -164,7 +169,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -189,6 +199,11 @@
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -218,7 +233,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/book/bookings": {
@@ -227,11 +247,34 @@
           "Book"
         ],
         "description": "Fetch all booking",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Some description...",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Some description...",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -270,6 +313,21 @@
           "default": {
             "description": ""
           }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/bookingUpdate"
+              }
+            }
+          }
         }
       }
     },
@@ -285,6 +343,16 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PilotRegistration"
+              }
+            }
           }
         }
       }
@@ -311,15 +379,11 @@
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "admin": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/AdminRegistrationUpdate"
               }
             }
           }
@@ -380,6 +444,140 @@
               "estimatedAmount": {
                 "type": "string",
                 "example": "string"
+              }
+            }
+          }
+        }
+      },
+      "bookingUpdate": {
+        "type": "object",
+        "properties": {
+          "driver": {
+            "type": "object",
+            "properties": {
+              "vehicleNo": {
+                "type": "string",
+                "example": "string"
+              },
+              "name": {
+                "type": "string",
+                "example": "string"
+              },
+              "email": {
+                "type": "string",
+                "example": "string"
+              },
+              "number": {
+                "type": "string",
+                "example": "string"
+              },
+              "startTime": {
+                "type": "string",
+                "example": "string"
+              },
+              "endTime": {
+                "type": "string",
+                "example": "string"
+              },
+              "status": {
+                "type": "string",
+                "example": "string"
+              }
+            }
+          }
+        }
+      },
+      "PilotRegistration": {
+        "type": "object",
+        "properties": {
+          "pilot": {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "example": "John Doe"
+              },
+              "Gmail": {
+                "type": "string",
+                "example": "example@gmail.com"
+              },
+              "DOB": {
+                "type": "string",
+                "example": "1990-01-01"
+              },
+              "MobileNumber": {
+                "type": "string",
+                "example": "1234567890"
+              },
+              "VehicleNo": {
+                "type": "string",
+                "example": "ABC123"
+              },
+              "VehicleType": {
+                "type": "string",
+                "example": "Car"
+              },
+              "vehicleOwnerName": {
+                "type": "string",
+                "example": "Jane Doe"
+              },
+              "vehicleDriverName": {
+                "type": "string",
+                "example": "John Driver"
+              },
+              "Address": {
+                "type": "string",
+                "example": "123 Main St, City"
+              },
+              "File": {
+                "type": "string",
+                "example": "file/path"
+              },
+              "CreatedDate": {
+                "type": "string",
+                "example": "2022-01-01"
+              },
+              "regStatus": {
+                "type": "string",
+                "example": "Active"
+              }
+            }
+          }
+        }
+      },
+      "AdminRegistrationUpdate": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "object",
+            "properties": {
+              "vehicleCompanyCode": {
+                "type": "string",
+                "example": "gerh"
+              },
+              "RelocationArea": {
+                "type": "string",
+                "example": "Business Area"
+              },
+              "RelocationAreaCode": {
+                "type": "string",
+                "example": "12345"
+              },
+              "CreatedDate": {
+                "type": "string",
+                "example": "2022-01-01"
+              },
+              "RelocationDistrict": {
+                "type": "string",
+                "example": "Business District"
+              },
+              "RelocationState": {
+                "type": "string",
+                "example": "Business State"
+              },
+              "LastUpdated": {
+                "type": "string",
+                "example": "2022-01-02"
               }
             }
           }

@@ -10,6 +10,17 @@ const bcrypt = require("bcrypt");
 const registerPilot = async (req, res) => {
   /* 	#swagger.tags = ['Pilot']
         #swagger.description = 'Endpoint to create register by pilot' */
+  /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/PilotRegistration"
+                    }  
+                }
+            }
+        } 
+    */
   try {
     const pilotRegistration = new PilotRegistration(req.body);
     const savedPilotRegistration = await pilotRegistration.save();
@@ -22,6 +33,18 @@ const registerPilot = async (req, res) => {
 const updatePilotRegistrationByAdmin = async (req, res) => {
   /* 	#swagger.tags = ['Pilot']
         #swagger.description = 'Endpoint to update pilot registration by admin' */
+
+  /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/AdminRegistrationUpdate"
+                    }  
+                }
+            }
+        } 
+    */
   try {
     const { id } = req.params;
     const { admin } = req.body;
