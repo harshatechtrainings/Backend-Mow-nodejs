@@ -33,7 +33,7 @@
 
 # .env
 
-    Create the below peoperties with values
+    Create .env file with the below properties with values
 
     PORT=
     MONGODB_URI=
